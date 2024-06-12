@@ -1,38 +1,33 @@
-package Demo_Projects;
+package Sel_practice;
 
 import java.time.Duration;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Calender_Practice {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 		
 		WebDriver driver = new ChromeDriver();
 		
-		driver.get("https://seleniumpractise.blogspot.com/2016/08/how-to-handle-calendar-in-selenium.html");
+		driver.get("https://www.globalsqa.com/demo-site/datepicker/");
+		Thread.sleep(4000);
+
+		driver.findElement(By.cssSelector("#datepicker")).click();
 		
-		driver.findElement(By.id("datepicker")).click();
+		String year = driver.findElement(By.className("ui-datepicker-title")).getText().split(" ")[1];
+		String month = driver.findElement(By.className("ui-datepicker-title")).getText().split(" ")[0];
 		
-		WebDriverWait w = new WebDriverWait(driver, Duration.ofSeconds(5));
-		w.until(ExpectedConditions.visibilityOfElementLocated(By.className("ui-datepicker-month")));
-		
-		String aMonth = driver.findElement(By.className("ui-datepicker-month")).getText();
-		String aYear = driver.findElement(By.className("ui-datepicker-year")).getText();
-		
-		while(!(aMonth.equals("August") && aYear.equals("2027"))) {
+		while(!(month.equals("July") && year.equals("2026"))) {
 			
-			driver.findElement(By.xpath("//div/a[@title='Next']")).click();
-			aMonth = driver.findElement(By.className("ui-datepicker-month")).getText();
-			aYear = driver.findElement(By.className("ui-datepicker-year")).getText();
+			driver.findElement(By.cssSelector("a[title*='Next']")).click();
+			year = driver.findElement(By.className("ui-datepicker-title")).getText().split(" ")[1];
+			month = driver.findElement(By.className("ui-datepicker-title")).getText().split(" ")[0];
 		}
-		
-		driver.findElement(By.xpath("//td[@data-handler='selectDay']/*[text()='10']")).click();
+		driver.findElement(By.xpath("//td/a[text()='13']")).click();
 	}
 
 }
